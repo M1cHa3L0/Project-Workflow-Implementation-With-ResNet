@@ -8,10 +8,38 @@ from torch.utils.data import DataLoader
 import numpy as np
 import matplotlib.pyplot as plt
 import os
+from pathlib import Path
+import requests
+import zipfile
 
 NUM_WORKERS = os.cpu_count()
+
+# get data
+def custom_data(data_path, img_path, data_file):
+    data_path = Path(data_path)
+    data_path.mkdir(parents=True, exist_ok=True)
+
+    image_path = data_path/img_path
+
+    # download data
+    with open(data_path/'file', 'wb') as f:
+        request = requests.get(data_file)
+        print('downloading')
+        f.write(request.content)
+
+    # unzip file
+    with zipfile.ZipFile(data_path/'file', 'r') as zip_ref:
+        print(f'unziping file')
+        zip_ref.extractall(image_path)
+    
+    print('downloaded')
+    return image_path/'train', image_path/'test'
+    
+
+    
+
 # create dataloader
-def Create_DataLoader(train_dir, test_dir, transforms, batch_size, num_workers=NUM_WORKERS):
+def create_dataLoader(train_dir, test_dir, transforms, batch_size, num_workers=NUM_WORKERS):
     """
     create train and test dataloader
 
@@ -39,6 +67,8 @@ def Create_DataLoader(train_dir, test_dir, transforms, batch_size, num_workers=N
         transform=transforms
     )
 
+    class_names = train_data.classes
+
     # turn dataset to dataloader
     train_dataloader = DataLoader(
         dataset=train_data,
@@ -55,7 +85,7 @@ def Create_DataLoader(train_dir, test_dir, transforms, batch_size, num_workers=N
         num_workers=num_workers,
         pin_memory=True
     )
-    return train_dataloader, test_dataloader
+    return train_dataloader, test_dataloader, class_names
 
-def VizData():
+def vizData():
     return 0

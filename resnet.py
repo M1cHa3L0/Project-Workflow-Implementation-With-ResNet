@@ -109,7 +109,7 @@ def test():
     net = ResNet50()
     x = torch.rand(2,3,224,224)
     y = net(x)
-    print(y.shape)
+    #print(y.shape)
 
 
 test()
