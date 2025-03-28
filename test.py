@@ -11,7 +11,7 @@ from torch import nn
 import os
 from torchvision import transforms, datasets
 from torchvision.transforms import ToTensor
-import data_setup, engine, ResNet, utils
+import data_setup, train, ResNet, utils
 
 # device agnostic code
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
@@ -60,5 +60,5 @@ resnet50model = ResNet.ResNet50(num_classes=len(class_names)).to(device)
 loss_fn = nn.CrossEntropyLoss()
 optimizer = torch.optim.SGD(params=resnet50model.parameters(), lr=LR)
 
-results = engine.train(resnet50model, train_dataloader, test_dataloader, loss_fn, optimizer, EPOCHS, device)
+results = train.train(resnet50model, train_dataloader, test_dataloader, loss_fn, optimizer, EPOCHS, device)
 print(results)
