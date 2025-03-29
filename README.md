@@ -1,6 +1,6 @@
-# resnet
+# ResNet
 
-> ** resnet practice project
+> ResNet practice project
 
 1. Paper replicate, implement renset50
 2. Use Food101 datasets to train resnet50 model
