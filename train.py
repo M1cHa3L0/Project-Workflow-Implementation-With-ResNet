@@ -28,7 +28,7 @@ def train_step(
     A tuple of training loss and training accuracy metrics.
     In the form (train_loss, train_accuracy).
     """
-    # mdoel.train()
+    model.train()
     train_loss, train_acc = 0,0
     for batch, (X, y) in enumerate(train_dataloader):
         # data to target device
@@ -150,7 +150,7 @@ def train(
         test_loss, test_acc = test_step(model, test_dataloader, loss_fn, device)
 
         # print result
-        print(f'epoch:{epoch} | train loss: {train_loss:.4f}, train acc: {train_acc*100:.3f} | test loss: {test_loss:.4f}, test acc: {test_acc*100:.3f}')
+        print(f'Epoch [{epoch+1}/{epochs}] | train loss: {train_loss:.4f}, train acc: {train_acc*100:.2f}% | test loss: {test_loss:.4f}, test acc: {test_acc*100:.2f}%')
         
         # save result
         result['train_loss'].append(train_loss)

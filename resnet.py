@@ -4,6 +4,7 @@ model file
 """
 import torch
 from torch import nn
+import numpy as np
 
 # 残差块类
 class block(nn.Module):
@@ -105,11 +106,8 @@ def ResNet152(img_channels=3, num_classes=1000):
     return ResNet(block, [3,8,36,3], img_channels, num_classes)
 
 
-def test():
-    net = ResNet50()
+def check_output_shape(num_classes):
+    net = ResNet50(num_classes=num_classes)
     x = torch.rand(2,3,224,224)
     y = net(x)
-    #print(y.shape)
-
-
-test()
+    print(y.shape)

@@ -13,31 +13,7 @@ import requests
 import zipfile
 
 NUM_WORKERS = os.cpu_count()
-
-# get data
-def custom_data(data_path, img_path, data_file):
-    data_path = Path(data_path)
-    data_path.mkdir(parents=True, exist_ok=True)
-
-    image_path = data_path/img_path
-
-    # download data
-    with open(data_path/'file', 'wb') as f:
-        request = requests.get(data_file)
-        print('downloading')
-        f.write(request.content)
-
-    # unzip file
-    with zipfile.ZipFile(data_path/'file', 'r') as zip_ref:
-        print(f'unziping file')
-        zip_ref.extractall(image_path)
     
-    print('downloaded')
-    return image_path/'train', image_path/'test'
-    
-
-    
-
 # create dataloader
 def create_dataLoader(train_dir, test_dir, transforms, batch_size, num_workers=NUM_WORKERS):
     """
